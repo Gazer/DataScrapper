@@ -40,6 +40,21 @@ chrome.runtime.onMessage.addListener(
 				}
 			}
 			sendResponse(result);
-		}
+    } else if (request.action == 'clickNext') {
+      console.log('Click next');
+      var next_page = request.next_page;
+      console.log(next_page);
+      var link = $(next_page);
+      if (link[0]) {
+        if (window.location != link[0].href) {
+          link[0].click();
+          sendResponse(true);
+        } else {
+          sendResponse(false);
+        }
+      } else {
+        sendResponse(false);
+      }
+    }
 	}
 );

@@ -92,6 +92,16 @@ angular.module('dataScrapper', [])
                         separator: (!$scope.currentFormula.separator) ? ',' : $scope.currentFormula.separator,
                         excel_mode: ($scope.currentFormula.excel_mode === undefined) ? 'yes' : $scope.currentFormula.excel_mode
                     });
+                    console.log('Sending clickNext');
+                    chrome.tabs.sendMessage(tab_opener, { action: 'clickNext', next_page: $scope.currentFormula.page }, {}, function (response) {
+                      if (response) {
+                        console.log("Will download again");
+                        setTimeout(function () {
+                          console.log("Downloadnig ...");
+                          $scope.downloadCSV()
+                        }, 2000);
+                      }
+                    });
                 }
             });
         };
